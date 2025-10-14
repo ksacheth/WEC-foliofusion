@@ -32,10 +32,14 @@ function sanitizeUrl(url) {
   
   const trimmedUrl = url.trim();
   
-  // Block javascript: and data: protocols to prevent XSS
-  const dangerousProtocols = /^(javascript|data|vbscript|file):/i;
-  if (dangerousProtocols.test(trimmedUrl)) {
-    return '';
+  // Only allow safe protocols (whitelist approach)
+  const safeProtocols = /^(https?:|mailto:)/i;
+  
+  // If URL has a protocol, ensure it's safe
+  if (trimmedUrl.includes(':')) {
+    if (!safeProtocols.test(trimmedUrl)) {
+      return '';
+    }
   }
   
   return trimmedUrl;

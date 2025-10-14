@@ -21,7 +21,7 @@ function sanitizeSocialLinks(links) {
 
   const allowedLinks = ['github', 'linkedin', 'twitter', 'instagram', 'website', 'email'];
   return allowedLinks.reduce((acc, key) => {
-    if (key in links && links[key]) {
+    if (key in links && links[key] && typeof links[key] === 'string') {
       // Sanitize URLs to prevent XSS via javascript: protocol
       acc[key] = sanitizeUrl(links[key]);
     }
