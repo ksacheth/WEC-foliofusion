@@ -1,21 +1,7 @@
 import { connectDB } from '@/lib/db/mongodb';
 import Section from '@/models/Section';
 import { verifyToken } from '@/lib/auth/jwt';
-import { successResponse, errorResponse } from '@/lib/utils/api';
-
-function extractToken(request) {
-  const authHeader = request.headers.get('authorization');
-  if (!authHeader) {
-    return null;
-  }
-
-  const [scheme, token] = authHeader.split(' ');
-  if (scheme !== 'Bearer' || !token) {
-    return null;
-  }
-
-  return token;
-}
+import { successResponse, errorResponse, extractToken } from '@/lib/utils/api';
 
 export async function POST(request) {
   try {

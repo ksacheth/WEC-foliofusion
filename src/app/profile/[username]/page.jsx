@@ -9,7 +9,7 @@ async function getPortfolioData(username) {
   const profile = await Profile.findOne({ username: username.toLowerCase() }).lean();
   if (!profile) return null;
 
-  const sections = await Section.find({ profileId: profile._id, visible: true })
+  const sections = await Section.find({ userId: profile.userId, visible: true })
     .sort({ order: 1 })
     .lean();
 

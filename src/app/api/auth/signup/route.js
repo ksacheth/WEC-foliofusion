@@ -55,11 +55,11 @@ export async function POST(request) {
     });
 
     // Generate token
-    // const token = generateToken({
-    //   userId: user._id.toString(),
-    //   username: user.username,
-    //   email: user.email,
-    // });
+    const token = generateToken({
+      userId: user._id.toString(),
+      username: user.username,
+      email: user.email,
+    });
 
     return successResponse({
       user: {
@@ -67,7 +67,7 @@ export async function POST(request) {
         username: user.username,
         email: user.email,
       },
-      // token,
+      token,
     }, 'User registered successfully');
   } catch (error) {
     console.error('Registration error:', error);

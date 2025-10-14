@@ -1,7 +1,7 @@
 import { connectDB } from '@/lib/db/mongodb';
 import Profile from '@/models/Profile';
 import { verifyToken } from '@/lib/auth/jwt';
-import { successResponse, errorResponse } from '@/lib/utils/api';
+import { successResponse, errorResponse, sanitizeUrl, extractToken } from '@/lib/utils/api';
 
 const ALLOWED_FIELDS = new Set([
   'fullName',
@@ -14,20 +14,6 @@ const ALLOWED_FIELDS = new Set([
   'layout',
 ]);
 
-function extractToken(request) {
-  const authHeader = request.headers.get('authorization');
-  if (!authHeader) {
-    return null;
-  }
-
-  const [scheme, token] = authHeader.split(' ');
-  if (scheme !== 'Bearer' || !token) {
-    return null;
-  }
-
-  return token;
-}
-
 function sanitizeSocialLinks(links) {
   if (!links || typeof links !== 'object') {
     return {};
@@ -35,8 +21,9 @@ function sanitizeSocialLinks(links) {
 
   const allowedLinks = ['github', 'linkedin', 'twitter', 'instagram', 'website', 'email'];
   return allowedLinks.reduce((acc, key) => {
-    if (key in links) {
-      acc[key] = links[key];
+    if (key in links && links[key]) {
+      // Sanitize URLs to prevent XSS via javascript: protocol
+      acc[key] = sanitizeUrl(links[key]);
     }
     return acc;
   }, {});

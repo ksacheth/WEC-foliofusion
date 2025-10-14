@@ -25,9 +25,41 @@ function validateEmail(email) {
   return emailRegex.test(email);
 }
 
+function sanitizeUrl(url) {
+  if (!url || typeof url !== 'string') {
+    return '';
+  }
+  
+  const trimmedUrl = url.trim();
+  
+  // Block javascript: and data: protocols to prevent XSS
+  const dangerousProtocols = /^(javascript|data|vbscript|file):/i;
+  if (dangerousProtocols.test(trimmedUrl)) {
+    return '';
+  }
+  
+  return trimmedUrl;
+}
+
+function extractToken(request) {
+  const authHeader = request.headers.get('authorization');
+  if (!authHeader) {
+    return null;
+  }
+
+  const [scheme, token] = authHeader.split(' ');
+  if (scheme !== 'Bearer' || !token) {
+    return null;
+  }
+
+  return token;
+}
+
 module.exports = {
   successResponse,
   errorResponse,
   validateUsername,
   validateEmail,
+  sanitizeUrl,
+  extractToken,
 };

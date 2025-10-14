@@ -20,6 +20,14 @@ const SectionSchema = new Schema({
     type: [Schema.Types.Mixed],
     default: [],
   },
+  visible: {
+    type: Boolean,
+    default: true,
+  },
+  order: {
+    type: Number,
+    default: 0,
+  },
 }, {
   timestamps: true,
 });
