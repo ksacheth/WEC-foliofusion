@@ -29,9 +29,9 @@ export default function RegisterPage() {
       const data = await response.json();
 
       if (data.success) {
-        localStorage.setItem('token', data.data.token);
-        localStorage.setItem('username', data.data.user.username);
-        router.push('/dashboard');
+        // localStorage.setItem('token', data.data.token);
+        // localStorage.setItem('username', data.data.user.username);
+        router.push('/auth/login');
       } else {
         setError(data.error || 'Registration failed');
       }

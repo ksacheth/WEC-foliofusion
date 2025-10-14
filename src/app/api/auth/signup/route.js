@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server';
 import { connectDB } from '@/lib/db/mongodb';
 import User from '@/models/User';
-// import Profile from '@/models/Profile';
+import Profile from '@/models/Profile';
 import { hashPassword } from '@/lib/auth/hash';
 import { generateToken } from '@/lib/auth/jwt';
 import { successResponse, errorResponse, validateUsername, validateEmail } from '@/lib/utils/api';
@@ -49,17 +49,17 @@ export async function POST(request) {
     await Profile.create({
       userId: user._id,
       username: user.username,
-      fullName: '',
+      fullName: user.username,
       title: '',
       bio: '',
     });
 
     // Generate token
-    const token = generateToken({
-      userId: user._id.toString(),
-      username: user.username,
-      email: user.email,
-    });
+    // const token = generateToken({
+    //   userId: user._id.toString(),
+    //   username: user.username,
+    //   email: user.email,
+    // });
 
     return successResponse({
       user: {
@@ -67,7 +67,7 @@ export async function POST(request) {
         username: user.username,
         email: user.email,
       },
-      token,
+      // token,
     }, 'User registered successfully');
   } catch (error) {
     console.error('Registration error:', error);
