@@ -17,7 +17,7 @@ export default function HomePage() {
           customizable templates and get your unique shareable link.
         </p>
         <div>
-          <Link href="/signup" className="bg-[#4F39F6] text-white px-6 py-3 rounded-lg mt-[3rem] hover:bg-indigo-700 transition-colors cursor-pointer">
+          <Link href="/auth/signup" className="bg-[#4F39F6] text-white px-6 py-3 rounded-lg mt-[3rem] hover:bg-indigo-700 transition-colors cursor-pointer">
             Get Started
           </Link>
           <button className="border border-[#4F39F6] text-[#4F39F6] px-6 py-3 rounded-lg mt-[3rem] ml-4 hover:bg-indigo-100 transition-colors cursor-pointer">

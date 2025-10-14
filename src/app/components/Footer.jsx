@@ -57,10 +57,6 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-
-        <div className="border-t border-slate-700 mt-8 pt-8 text-center text-sm text-slate-400">
-          <p>&copy; 2025 FolioFusion. All rights reserved. Built with ❤️ by <a rel="nofollow" target="_blank" href="https://meku.dev" className="text-indigo-400 hover:text-indigo-300">Meku.dev</a></p>
-        </div>
       </div>
     </footer>
   );
