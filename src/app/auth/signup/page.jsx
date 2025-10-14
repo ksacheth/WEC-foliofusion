@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import axios from 'axios';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -20,23 +21,26 @@ export default function RegisterPage() {
     setLoading(true);
 
     try {
-      const response = await fetch('/api/auth/signup', {
-        method: 'POST',
+      const response = await axios.post('/api/auth/signup', formData, {
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
+      const data = response.data;
 
       if (data.success) {
-        // localStorage.setItem('token', data.data.token);
-        // localStorage.setItem('username', data.data.user.username);
+        // registration complete — redirect to login
         router.push('/auth/login');
       } else {
         setError(data.error || 'Registration failed');
       }
     } catch (err) {
-      setError('An error occurred. Please try again.');
+      if (axios.isAxiosError(err)) {
+        // prefer server-provided message if present
+        const serverMessage = err.response?.data?.error || err.response?.data?.message;
+        setError(serverMessage || err.message || 'An error occurred. Please try again.');
+      } else {
+        setError('An error occurred. Please try again.');
+      }
     } finally {
       setLoading(false);
     }

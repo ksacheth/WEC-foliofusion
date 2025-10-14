@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import axios from 'axios';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -19,13 +20,11 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
+      const response = await axios.post('/api/auth/login', formData, {
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
+      const data = response.data;
 
       if (data.success) {
         localStorage.setItem('token', data.data.token);
@@ -35,7 +34,13 @@ export default function LoginPage() {
         setError(data.error || 'Login failed');
       }
     } catch (err) {
-      setError('An error occurred. Please try again.');
+      // axios error handling
+      if (axios.isAxiosError(err)) {
+        const serverMessage = err.response?.data?.error || err.response?.data?.message;
+        setError(serverMessage || err.message || 'An error occurred. Please try again.');
+      } else {
+        setError('An error occurred. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
