@@ -41,6 +41,7 @@ export async function GET(request) {
       type: section.type,
       title: section.title,
       items: Array.isArray(section.items) ? section.items : [],
+      visible: section.visible !== false,
       createdAt: section.createdAt,
       updatedAt: section.updatedAt,
     }));

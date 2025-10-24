@@ -55,6 +55,7 @@ export async function POST(request) {
         type: section.type,
         title: section.title,
         items: section.items,
+        visible: section.visible,
         createdAt: section.createdAt,
         updatedAt: section.updatedAt,
       },

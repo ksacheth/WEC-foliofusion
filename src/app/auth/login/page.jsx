@@ -47,10 +47,10 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-lg">
         <div>
-          <Link href="/" className="text-2xl font-bold bg-blue-600  bg-clip-text text-transparent">
+          <Link href="/" className="text-2xl font-bold text-blue-600">
             FolioFusion
           </Link>
           <h2 className="mt-6 text-3xl font-bold text-gray-900">Sign in to your account</h2>
@@ -80,7 +80,7 @@ export default function LoginPage() {
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                placeholder="john@example.com"
+                placeholder="example@example.com"
               />
             </div>
             <div>

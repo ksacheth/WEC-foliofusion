@@ -9,20 +9,19 @@ async function getPortfolioData(username) {
   const profile = await Profile.findOne({ username: username.toLowerCase() }).lean();
   if (!profile) return null;
 
-  const sections = await Section.find({ profileId: profile._id, visible: true })
+  const sections = await Section.find({ userId: profile.userId, visible: { $ne: false } })
     .sort({ order: 1 })
     .lean();
 
   return { profile, sections };
 }
 
-// Theme colors
 const themeColors = {
-  blue: { bg: 'from-blue-50 to-indigo-100', accent: 'text-blue-600', text: 'text-blue-700' },
-  green: { bg: 'from-green-50 to-emerald-100', accent: 'text-green-600', text: 'text-green-700' },
-  purple: { bg: 'from-purple-50 to-pink-100', accent: 'text-purple-600', text: 'text-purple-700' },
-  orange: { bg: 'from-orange-50 to-red-100', accent: 'text-orange-600', text: 'text-orange-700' },
-  dark: { bg: 'from-gray-800 to-gray-900', accent: 'text-gray-100', text: 'text-gray-200' },
+  blue: { bg: 'bg-blue-50', accent: 'text-blue-600', text: 'text-blue-700' },
+  green: { bg: 'bg-green-50', accent: 'text-green-600', text: 'text-green-700' },
+  purple: { bg: 'bg-purple-50', accent: 'text-purple-600', text: 'text-purple-700' },
+  orange: { bg: 'bg-orange-50', accent: 'text-orange-600', text: 'text-orange-700' },
+  dark: { bg: 'bg-gray-800', accent: 'text-gray-100', text: 'text-gray-200' },
 };
 
 export default async function PortfolioPage({ params }) {
@@ -37,7 +36,7 @@ export default async function PortfolioPage({ params }) {
   const theme = themeColors[profile.theme] || themeColors.blue;
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br ${theme.bg}`}>
+    <div className={`min-h-screen ${theme.bg}`}>
       {/* Hero Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">

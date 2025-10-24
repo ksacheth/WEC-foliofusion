@@ -6,8 +6,6 @@ if (!MONGODB_URI) {
   throw new Error('Please define the MONGODB_URI environment variable');
 }
 
-// Caching the connection promise and connection instance on the global object
-// This is to prevent connections growing during hot-reloads in development
 let cached = global.mongoose;
 
 if (!cached) {
